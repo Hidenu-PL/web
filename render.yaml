@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: web-archiver
+    runtime: node
+    buildCommand: npm install && node build.mjs
+    startCommand: node --enable-source-maps dist/index.mjs
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: web-archiver-db
+          property: connectionString
+      - key: NODE_ENV
+        value: production
+
+databases:
+  - name: web-archiver-db
+    databaseName: web_archiver
+    user: web_archiver
